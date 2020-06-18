@@ -111,11 +111,7 @@ class CPU:
             0b01000101: 'PUSH',
             0b01000110: 'POP',
             0b01010000: 'CALL',
-            0b00010001: 'RET',
-            0b10100111: 'CMP',
-            0b01010100: 'JMP',
-            0b01010101: 'JEQ',
-            0b01010110: 'JNE'
+            0b00010001: 'RET'
             }
         alu_codes = set(['ADD', 'SUB', 'MUL', 'CMP'])
 
