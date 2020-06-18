@@ -92,7 +92,6 @@ class CPU:
 
         for i in range(8):
             print(" %02X" % self.reg[i], end='')
-
         print()
 
     def ram_read(self, address):
@@ -165,21 +164,7 @@ class CPU:
             elif op=='RET':
                 self.PC = self.ram_read(self.SP)
                 self.SP += 1
-            elif op=='JMP':
-                reg_num = self.ram_read(self.PC + 1)
-                self.PC = self.reg[reg_num]
-            elif op=='JEQ':
-                if self.FL==1:
-                    reg_num = self.ram_read(self.PC + 1)
-                    self.PC = self.reg[reg_num]
-                else:
-                    self.PC += 2
-            elif op=='JNE':
-                if self.FL!=1:
-                    reg_num = self.ram_read(self.PC + 1)
-                    self.PC = self.reg[reg_num]
-                else:
-                    self.PC += 2
+
             elif op=='HLT':
                 break
             else:
