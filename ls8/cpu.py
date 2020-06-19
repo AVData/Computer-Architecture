@@ -22,25 +22,19 @@ class CPU:
         """Load a program into memory."""
         address = 0
         if len(sys.argv)!=2:
-            print('Wrong amount of args. \nUsage example: python ls8.py aprogram.ls8')
+            print('Wrong number of args. \nUsage example: python ls8.py aprogram.ls8')
             sys.exit(1)
 
         program_file = open(sys.argv[1])
 
         for line in program_file:
-            # print(line)
-            # remove newline chars
             inst = line.strip()
             if not inst.startswith('#'):
                 # keep stuff before before "#"
                 inst = inst.split('#', 1)[0]
-                # remove whitespace
-                # print(inst.split())
+
                 inst = inst.split()[0]
-                # remove '0b'
-                # inst = inst[2:]
-                # convert str to int, base 2
-                # print(inst)
+
                 inst = int(inst, 2)
                 self.ram[address] = inst
                 address += 1
@@ -68,10 +62,7 @@ class CPU:
                 self.FL = 1
             else:
                 self.FL = 0
-            # elif x>y:
-            #     self.FL = 0b00000010
-            # else: # x<y
-            #     self.FL = 0b00000100
+
         else:
             raise Exception("Unsupported ALU operation")
 
@@ -83,8 +74,7 @@ class CPU:
 
         print(f"TRACE: %02X | %02X %02X %02X |" % (
             self.PC,
-            # self.fl,
-            #self.ie,
+
             self.ram_read(self.PC),
             self.ram_read(self.PC + 1),
             self.ram_read(self.PC + 2)
@@ -116,12 +106,7 @@ class CPU:
         alu_codes = set(['ADD', 'SUB', 'MUL', 'CMP'])
 
         while True:
-            # print(self.reg)
-            # print([(i,j) for i,j in enumerate(self.ram[:75])])
-            # print('SP num: ', self.SP)
-            # print('PC num: ', self.PC)
-            # print('flag: ', self.FL)
-            # print('--------------------------')
+
             binary_op_code = self.ram_read(self.PC)
             op = op_codes[binary_op_code]
 
@@ -151,7 +136,6 @@ class CPU:
                 self.SP += 1
                 self.PC += 2
             elif op=='CALL':
-                # push address of intr after call to stack
                 self.SP -= 1
                 self.ram[self.SP] = self.PC + 2
                 # pc is set to address stored in reg, so can jump to that intr in ram
@@ -160,7 +144,6 @@ class CPU:
             elif op=='RET':
                 self.PC = self.ram_read(self.SP)
                 self.SP += 1
-
             elif op=='HLT':
                 break
             else:
